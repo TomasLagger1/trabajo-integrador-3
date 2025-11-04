@@ -9,58 +9,62 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            logedIn: false
+            logedIn: false,
+            error: null
         };
     }
 
-    login(email, password) {
-        auth.signInWithEmailAndPassword(email, password)
-        .then( response =>{
-            this.setState({logedIn: true})
-        })
-        .catch( error => {
-            this.setState({error: 'Fallo al iniciar sesión'})
-        })
+    onSubmit() {
+    if(!this.state.email.includes('@')) {
+        this.setState({error: 'falta @ en el email'});
+        return;
     }
+
+    auth.signInWithEmailAndPassword(this.state.email, this.state.password)
+        .then(response => {
+            this.setState({
+                loggedIn: true,
+            });
+            this.props.navigation.navigate('HomeMenu');
+        })
+        .catch(error => {
+            this.setState({
+                error: 'Credenciales inválidas',
+            });
+        });
+}
 
     render() {
-        return (
+        return(
             <View style={styles.container}>
-                <Text style={styles.title}>Login</Text>
+                <Text style={styles.title}> Login </Text>
 
-                <TextInput style={styles.field}
-                    keyboardType='email-address'
-                    placeholder='email'
-                    onChangeText={text => this.setState({ email: text })}
-                    value={this.state.email} />
-                <TextInput style={styles.field}
-                    keyboardType='default'
-                    placeholder='password'
+                <TextInput style={styles.input}
+                    keyboardType="email-address"
+                    placeholder="Email" 
+                    value={this.state.email}
+                    onChangeText={text => this.setState({ email: text })}/>
+                <TextInput style={styles.input}
+                    keyboardType="default"
+                    placeholder="Password"
                     secureTextEntry={true}
-                    onChangeText={text => this.setState({ password: text })}
-                    value={this.state.password} />
-                <Pressable style={styles.field} onPress={() => this.onSubmit()}>
-                    <Text> Login </Text>
+                    value={this.state.password}
+                    onChangeText={text => this.setState({ password: text })}/>
+
+                {this.state.error && <Text style={styles.errorText}>{this.state.error}</Text>}
+
+
+                <Pressable onPress={() => this.onSubmit()} style={styles.button}>
+                    <Text style={styles.buttonText}> Login </Text>
                 </Pressable>
 
-                <Pressable
-                    style={[styles.button, styles.registerButton]}
-                    onPress={() => this.props.navigation.navigate("Register")}
-                >
-                    <Text style={styles.buttonText}>No tengo cuenta</Text>
+                <Pressable onPress={ () => this.props.navigation.navigate('Register') } style={styles.button}>
+                    <Text style={styles.buttonText}> No tengo cuenta </Text>
                 </Pressable>
 
-
-
-                <Pressable
-                    style={[styles.button, styles.loginButton]}
-                    onPress={() => this.props.navigation.navigate("HomeMenu")}
-                >
-                    <Text style={styles.buttonText}>Entrar en la app.</Text>
-                </Pressable>
-            </View>
-        );
-    }
+        </View>
+    )
+}
 }
 
 const styles = StyleSheet.create({
