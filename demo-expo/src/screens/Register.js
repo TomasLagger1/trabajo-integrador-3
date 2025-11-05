@@ -2,62 +2,80 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { TextInput } from "react-native-web";
 import { auth } from "../firebase/config";
+import { db } from "../firebase/config";
 
 class Register extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            password: '',
-            registered: false
-        };
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: '',
+      username: '',
+      password: '',
+      registered: false,
+      error: null
     }
+  }
 
-    register(email, password) {
-        auth.createUserWithEmailAndPassword(email, password)
-        .then( response =>{
-            this.setState({registered: true})
-        })
-        .catch( error => {
-            this.setState({error: 'Fallo al registrar usuario'})
-        })
-    }
+  onSubmit() {
 
-    
+    auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then(response => {
+        this.setState({ registered: true });
+        return db.collection('users').add({
+          email: this.state.email,
+          username: this.state.username,
+          createdAt: Date.now()
+        });
+      })
+      .then(() => {
+        this.props.navigation.navigate('Login');
+      })
+      .catch(error => {
+        this.setState({ error: 'Fallo en el registro' });
+        console.log(error);
+      });
+  }
 
-    onSubmit() {
-        this.register(this.state.email, this.state.password)
-    }
+  render() {
+    return(
+      <View style={styles.container}>
+        <Text style={styles.title}> Register </Text>
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text style={styles.title}>Register</Text>
+        <TextInput style={styles.input}
+          keyboardType="email-address"
+          placeholder="Email" 
+          value={this.state.email}
+          onChangeText={text => this.setState({ email: text })}
+        />
+        <TextInput style={styles.input}
+          placeholder="Username"
+          value={this.state.username}
+          onChangeText={text => this.setState({ username: text })}
+        />
+        <TextInput style={styles.input}
+          keyboardType="default"
+          placeholder="Password"
+          secureTextEntry={true}
+          value={this.state.password}
+          onChangeText={text => this.setState({ password: text })}
+        />
 
-                <TextInput style={styles.field}
-                    keyboardType='email-address'
-                    placeholder='email'
-                    onChangeText={text => this.setState({ email: text })}
-                    value={this.state.email} />
-                <TextInput style={styles.field}
-                    keyboardType='default'
-                    placeholder='password'
-                    secureTextEntry={true}
-                    onChangeText={text => this.setState({ password: text })}
-                    value={this.state.password} />
-                <Pressable style={styles.field} onPress={() => this.onSubmit()}>
-                    <Text> Register </Text>
-                </Pressable>
+        {this.state.error && <Text style={{color:'red', marginTop:10}}>{this.state.error}</Text>}
 
-                <Pressable
-                    style={styles.button}
-                    onPress={() => this.props.navigation.navigate("Login")}
-                >
-                    <Text style={styles.buttonText}>Ya tengo cuenta</Text>
-                </Pressable>
-            </View>
-        );
-    }
+        <Pressable onPress={() => this.onSubmit()} style={styles.button}>
+          <Text style={styles.buttonText}> Registrarse </Text>
+        </Pressable>
+
+        <Pressable onPress={ () => this.props.navigation.navigate('Login') } style={styles.button}>
+          <Text style={styles.buttonText}> Ya tengo cuenta </Text>
+        </Pressable>
+
+        <Text style={styles.userInfo}> Email: {this.state.email} </Text>
+        <Text style={styles.userInfo}> Usuario: {this.state.username} </Text>
+        <Text style={styles.userInfo}> Contraseña: {this.state.password} </Text>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
