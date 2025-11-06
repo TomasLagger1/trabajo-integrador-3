@@ -54,13 +54,17 @@ class Login extends Component {
                 {this.state.error && <Text style={styles.errorText}>{this.state.error}</Text>}
 
 
-                <Pressable onPress={() => this.onSubmit()} style={styles.button}>
-                    <Text style={styles.buttonText}> Login </Text>
-                </Pressable>
+        <Pressable onPress={() => this.onSubmit()} style ={styles.buttonLogin}>
+          <Text style={styles.buttonText}>Iniciar sesión</Text>
+        </Pressable>
 
-                <Pressable onPress={ () => this.props.navigation.navigate('Register') } style={styles.button}>
-                    <Text style={styles.buttonText}> No tengo cuenta </Text>
-                </Pressable>
+        <Pressable
+          onPress ={()=> this.props.navigation.navigate("Register")}
+          style={styles.buttonRegister}>
+
+          <Text style={styles.buttonText}>No tengo cuenta</Text>
+
+        </Pressable>
 
         </View>
     )
@@ -68,37 +72,57 @@ class Login extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#faf7f7",
-        padding: 20,
+
+container: {
+
+      backgroundColor: "white",
+      padding: 20,
+      justifyContent: "center"
     },
-    title: {
-        fontSize: 28,
-        fontWeight: "bold",
-        marginBottom: 10,
-        color: "#000",
+
+    title:{
+      fontSize: 28,
+      fontWeight: "bold",
+      marginBottom: 20,
+      color: "#45abbf",
+      textAlign: "center"
     },
-    button: {
-        paddingVertical: 10,
-        borderRadius: 6,
-        alignItems: "center",
-        marginBottom: 10,
+
+    input:{
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    borderRadius: 6,
+    marginBottom: 10
     },
-    registerButton: {
-        backgroundColor: "#8ecae6", 
+    
+    buttonLogin: {
+    backgroundColor: "#8ecae6",
+    paddingVertical: 10,
+    borderRadius: 6,
+    alignItems: "center",
+    marginTop: 10
     },
-    loginButton: {
-        backgroundColor: "#f4a261", 
-    },
+
+    buttonRegister: {
+      backgroundColor: "#a8dadc",
+      paddingVertical: 10,
+      borderRadius: 6,
+      alignItems: "center",
+      marginTop: 10
+    } ,
     buttonText: {
-        color: "#black",
-        fontSize: 16,
+      color: "#000",
+      fontSize: 16
     },
-    field: {
-        height: 40,
-        borderColor: 'gray',
+
+    errorText: {
+      color: "red",
+      marginTop: 10,
+      textAlign: "center"
     }
+
+
 });
 
 export default Login;
