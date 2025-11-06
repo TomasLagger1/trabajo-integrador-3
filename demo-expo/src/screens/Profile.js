@@ -37,13 +37,13 @@ const styles = StyleSheet.create({
     color: "black",
   },
   button: {
-    backgroundColor: "#f4a261", // naranja
+    backgroundColor: "orange", 
     paddingVertical: 10,
     borderRadius: 6,
     alignItems: "center",
   },
   buttonText: {
-    color: "#black",
+    color: "black",
     fontSize: 16,
     textAlign: "center",
   },

@@ -37,13 +37,13 @@ class Register extends Component {
   }
 
   render() {
-    return(
+    return (
       <View style={styles.container}>
         <Text style={styles.title}> Register </Text>
 
         <TextInput style={styles.input}
           keyboardType="email-address"
-          placeholder="Email" 
+          placeholder="Email"
           value={this.state.email}
           onChangeText={text => this.setState({ email: text })}
         />
@@ -60,7 +60,9 @@ class Register extends Component {
           onChangeText={text => this.setState({ password: text })}
         />
 
-        {this.state.error && <Text style={{color:'red', marginTop:10}}>{this.state.error}</Text>}
+    
+      {this.state.error && <Text style={styles.errorText}>{this.state.error}</Text>}
+
 
 
         <View style={styles.buttonsContainer}>
