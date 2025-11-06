@@ -27,14 +27,14 @@ class Profile extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#faf7f7",
+    backgroundColor: "white",
     padding: 20,
   },
   title: {
     fontSize: 28,
     fontWeight: "bold",
     marginBottom: 15,
-    color: "#000",
+    color: "black",
   },
   button: {
     backgroundColor: "#f4a261", // naranja

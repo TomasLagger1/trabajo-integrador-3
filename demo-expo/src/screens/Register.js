@@ -48,13 +48,13 @@ class Register extends Component {
           onChangeText={text => this.setState({ email: text })}
         />
         <TextInput style={styles.input}
-          placeholder="Username"
+          placeholder="Usuario"
           value={this.state.username}
           onChangeText={text => this.setState({ username: text })}
         />
         <TextInput style={styles.input}
           keyboardType="default"
-          placeholder="Password"
+          placeholder="Contraseña"
           secureTextEntry={true}
           value={this.state.password}
           onChangeText={text => this.setState({ password: text })}
@@ -62,53 +62,78 @@ class Register extends Component {
 
         {this.state.error && <Text style={{color:'red', marginTop:10}}>{this.state.error}</Text>}
 
-        <Pressable onPress={() => this.onSubmit()} style={styles.button}>
-          <Text style={styles.buttonText}> Registrarse </Text>
-        </Pressable>
 
-        <Pressable onPress={ () => this.props.navigation.navigate('Login') } style={styles.button}>
-          <Text style={styles.buttonText}> Ya tengo cuenta </Text>
-        </Pressable>
+        <View style={styles.buttonsContainer}>
+          <Pressable onPress={() => this.onSubmit()} style={styles.button}>
+            <Text style={styles.buttonText}>Registrarse</Text>
+          </Pressable>
 
-        <Text style={styles.userInfo}> Email: {this.state.email} </Text>
-        <Text style={styles.userInfo}> Usuario: {this.state.username} </Text>
-        <Text style={styles.userInfo}> Contraseña: {this.state.password} </Text>
+          <Pressable
+            onPress={() => this.props.navigation.navigate("Login")}
+            style={styles.buttonYaTengo}
+          >
+            <Text style={styles.buttonText}>Ya tengo cuenta</Text>
+          </Pressable>
+        </View>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#faf7f7",
-        padding: 20,
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: "bold",
-        marginBottom: 10,
-        color: "#000",
-    },
-    description: {
-        fontSize: 16,
-        color: "#333",
-        marginBottom: 10,
-    },
-    button: {
-        backgroundColor: "#8ecae6", 
-        paddingVertical: 10,
-        borderRadius: 6,
-        alignItems: "center",
-    },
-    buttonText: {
-        color: "#black",
-        fontSize: 16,
-    },
-    field: {
-        height: 40,
-        borderColor: 'gray',
-    }
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    padding: 20,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+    marginBottom: 20,
+    color: "black",
+    textAlign: "center"
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    borderRadius: 6,
+    marginBottom: 10,
+    width: "80%",
+  },
+  buttonsContainer: {
+    marginTop: 15,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  button: {
+    backgroundColor: "#8ecae6",
+    paddingVertical: 12,
+    borderRadius: 6,
+    alignItems: "center",
+    width: "60%",
+    marginVertical: 6
+  },
+  buttonYaTengo: {
+    backgroundColor: "#a8dadc",
+    paddingVertical: 12,
+    borderRadius: 6,
+    alignItems: "center",
+    width: "60%",
+    marginVertical: 6
+  },
+  buttonText: {
+    color: "black",
+    fontSize: 16
+  },
+  errorText: {
+    color: "red",
+    marginTop: 10,
+    textAlign: "center"
+  },
 });
 
 export default Register;
