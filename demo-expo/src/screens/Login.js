@@ -14,6 +14,13 @@ class Login extends Component {
         };
     }
 
+    componentDidMount(){
+        auth.onAuthStateChanged(usuario => {
+            if (usuario != null) { 
+                this.props.navigation.navigate('HomeMenu');
+            }
+        })
+}
     onSubmit() {
         if (!this.state.email.includes('@')) {
             this.setState({ error: 'falta @ en el email' });

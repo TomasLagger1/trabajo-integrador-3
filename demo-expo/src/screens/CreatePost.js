@@ -16,15 +16,18 @@ class CreatePost extends Component {
             db.collection("posts").add({
                 owner: auth.currentUser.email,
                 description: this.state.description,
-                createdAt: Date.now()
+                createdAt: Date.now(),
+                likes: [],
+                comentarios: []
+
             })
                 .then(() => {
-                    this.setState({
-                        description: ""
-                    });
+                    this.setState({ description: "" });
+                    this.props.navigation.navigate('Home');
                 })
                 .catch(e => console.log(e));
         }
+
     }
 
 
