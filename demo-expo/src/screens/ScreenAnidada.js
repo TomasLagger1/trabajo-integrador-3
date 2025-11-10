@@ -3,7 +3,6 @@ import Home from './Home';
 import Coments from '../components/Coments';
 
 const Stack = createNativeStackNavigator()
-
 export default function ScreenAnidada() {
 
     return (

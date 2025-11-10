@@ -3,7 +3,6 @@ import { View, Text, StyleShee,FlatList } from "react-native";
 import { db } from "../firebase/config";
 import Posteo from "../components/Posteo";
 
-
 class Home extends Component {
     constructor(props) {
         super(props);
