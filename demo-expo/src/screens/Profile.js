@@ -4,13 +4,22 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 class Profile extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      email: '',
+      username: '',
+      error: null
+    };
   }
+
+
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Mi Perfil</Text>
-
+        <Text>nombre de usuario: </Text>
+        <Text>email: </Text>
+        <Text>cantidad de posteos:</Text>
         <Pressable
           style={styles.button}
           onPress={() => this.props.navigation.navigate("Login")}
@@ -37,7 +46,7 @@ const styles = StyleSheet.create({
     color: "black",
   },
   button: {
-    backgroundColor: "orange", 
+    backgroundColor: "orange",
     paddingVertical: 10,
     borderRadius: 6,
     alignItems: "center",
