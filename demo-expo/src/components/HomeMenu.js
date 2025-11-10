@@ -17,7 +17,7 @@ class HomeMenu extends React.Component {
     }
     render() {
         return (
-            <Tab.Navigator screenOptions={{ headerShown: false }}>
+            <Tab.Navigator Options={{ headerShown: false }}>
                 <Tab.Screen
                     name="Home"
                     component={ScreenAnidada}
