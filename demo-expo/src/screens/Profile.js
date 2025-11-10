@@ -1,31 +1,37 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import { auth, db } from "../firebase/config";
 
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: '',
-      username: '',
-      error: null
-    };
+
+  }
+
+  signOut() {
+    auth.signOut()
+      .then(() => {
+        this.props.navigation.navigate('Login');
+      })
+      .catch(err => {
+        console.log('Error al cerrar sesión:', err);
+      });
   }
 
 
-
   render() {
-    return (
+    return (     
       <View style={styles.container}>
         <Text style={styles.title}>Mi Perfil</Text>
-        <Text>nombre de usuario: </Text>
-        <Text>email: </Text>
-        <Text>cantidad de posteos:</Text>
+        <Text>nombre de usuario: {auth.currentUser.username}</Text>
+        <Text>email: {auth.currentUser.email}</Text>
+        <Text>cantidad de posteos: {auth.currentUser.posts}</Text>
         <Pressable
           style={styles.button}
-          onPress={() => this.props.navigation.navigate("Login")}
+          onPress={() => this.signOut()}
         >
           <Text style={styles.buttonText}>
-            Salir de la app. Hacer click aquí te lleva al login.
+            Salir de la app
           </Text>
         </Pressable>
       </View>
