@@ -48,7 +48,7 @@ class CreatePost extends Component {
                     <Text style={styles.buttonText}>Publicar</Text>
                 </Pressable>
             </View>
-        );
+        ); 
     }
 }
 

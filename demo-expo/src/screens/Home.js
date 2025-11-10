@@ -28,7 +28,7 @@ class Home extends Component {
 
         return (
             <View>
-                <Text>Home</Text>
+                <Text>Posts:</Text>
                 <FlatList
                         data={this.state.posteos}
                         keyExtractor={item => item.id.toString()}
