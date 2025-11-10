@@ -31,19 +31,28 @@ class Posteo extends Component {
         const likeado = userEmail && this.props.info.data.likes.includes(userEmail);
         return (
             <View style={styles.container}>
-                <Text>{this.props.info.data.owner}</Text>
-                <Text>{this.props.info.data.description}</Text>
-                <Text>Cantidad de likes: {this.props.info.data.likes.length}</Text>
-                <Text>Cantidad de comentarios: {this.props.info.data.comentarios.length}</Text>
-                <Pressable onPress={()=> this.likes()} style={styles.botonLikear}>
-                    <Text>
-                        {likeado ? '❤️' : '🤍'}
-                    </Text>
-                </Pressable>
-                <Pressable
-                    onPress={() => this.props.navigation.navigate('Comentarios', { info: this.props.info })}>
-                    <Text>Ver comentarios</Text>
-                </Pressable>
+                <View style={styles.card}>
+                    <View style={styles.header}>
+                        <Text style={styles.owner}>{this.props.info.data.owner}</Text>
+                    </View>
+
+                    <Text style={styles.description}>{this.props.info.data.description}</Text>
+
+                    <View style={styles.metaRow}>
+                        <Text style={styles.counts}>Cantidad de likes: {this.props.info.data.likes.length}</Text>
+                        <Text style={styles.counts}>Cantidad de comentarios: {this.props.info.data.comentarios.length}</Text>
+                    </View>
+
+                    <View style={styles.actions}>
+                        <Pressable onPress={() => this.likes()} style={[styles.botonLikear, likeado ? styles.liked : styles.notLiked]}>
+                            <Text style={styles.likeText}>{likeado ? '❤️' : '🤍'}</Text>
+                        </Pressable>
+
+                        <Pressable onPress={() => this.props.navigation.navigate('Comentarios', { info: this.props.info })} style={styles.commentsBtn}>
+                            <Text style={styles.commentsLink}>Ver comentarios</Text>
+                        </Pressable>
+                    </View>
+                </View>
             </View>
         );
     }
@@ -52,17 +61,76 @@ class Posteo extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "white",
-        padding: 20,
-        justifyContent: "center",
-        alignItems: "center"
+        padding: 12,
+        backgroundColor: '#eaf6ff',
+    },
+    card: {
+        backgroundColor: '#ffffff',
+        borderRadius: 10,
+        padding: 14,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+        borderWidth: 1,
+        borderColor: '#e6f2fb',
+    },
+    header: {
+        backgroundColor: '#d9f0ff',
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        borderRadius: 8,
+        alignSelf: 'center',
+        marginBottom: 10,
+    },
+    owner: {
+        color: '#05629a',
+        fontWeight: '600',
+        textAlign: 'center'
+    },
+    description: {
+        color: '#222',
+        lineHeight: 20,
+        textAlign: 'left',
+        marginBottom: 12,
+    },
+    metaRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 10,
+    },
+    counts: {
+        color: '#555',
+        fontSize: 13,
+    },
+    actions: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
     },
     botonLikear: {
-        marginVertical: 8,
-        padding: 8,
-        borderRadius: 6,
-        backgroundColor: '#f1f1f1',
+        marginRight: 12,
+        paddingVertical: 6,
+        paddingHorizontal: 12,
+        borderRadius: 20,
+    },
+    liked: {
+        backgroundColor: '#ffd6e0',
+    },
+    notLiked: {
+        backgroundColor: '#e6f5ff',
+    },
+    likeText: {
+        fontSize: 18,
+    },
+    commentsBtn: {
+        paddingVertical: 6,
+        paddingHorizontal: 8,
+    },
+    commentsLink: {
+        color: '#2a9df4',
+        fontWeight: '500'
     },
 });
 

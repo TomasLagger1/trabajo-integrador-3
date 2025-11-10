@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { View, Text, StyleShee,FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { db } from "../firebase/config";
 import Posteo from "../components/Posteo";
 
@@ -27,16 +27,41 @@ class Home extends Component {
     render() {
 
         return (
-            <View>
-                <Text>Posts:</Text>
+            <View style={styles.container}>
+                <Text style={styles.titulo}>Posts:</Text>
                 <FlatList
-                        data={this.state.posteos}
-                        keyExtractor={item => item.id.toString()}
-                        renderItem={({item}) => <Posteo info={item} navigation={this.props.navigation} />}
-                    />
+                    data={this.state.posteos}
+                    keyExtractor={item => item.id.toString()}
+                    renderItem={({item}) => <Posteo info={item} navigation={this.props.navigation} />}
+                    contentContainerStyle={styles.list}
+                    ListEmptyComponent={<Text style={styles.emptyText}>No hay posteos aún.</Text>}
+                />
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f7f7f7',
+    paddingHorizontal: 16,
+    paddingTop: 12,
+  },
+  titulo: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#222',
+    marginBottom: 8,
+  },
+  list: {
+    paddingBottom: 24,
+  },
+  emptyText: {
+    textAlign: 'center',
+    color: '#777',
+    marginTop: 20,
+  },
+});
 
 export default Home;
