@@ -12,25 +12,19 @@ class Coments extends Component {
   }
 
   onSubmit() {
-    const postId = this.props.route.params.info.id;
-
     if (this.state.comentario !== "") {
-      db.collection("posts")
-        .doc(postId)
-        .update({
-          comentarios: firebase.firestore.FieldValue.arrayUnion({
-            owner: auth.currentUser.email,
-            texto: this.state.comentario,
-            createdAt: Date.now(),
-          }),
-        })
+      db.collection("comentarios").add({
+        owner: auth.currentUser.email,
+        comentario: this.state.comentario,
+        createdAt: Date.now(),
+        postId: this.props.route.params.postId
+      })
         .then(() => {
-          this.setState({ comentario: "" });
-          this.props.navigation.navigate("Home");
+            this.setState({ comentario: "" });
+            this.props.navigation.Home();
         })
         .catch(e => console.log(e));
-    }
-  }
+    }}
 
   render() {
 
@@ -45,8 +39,8 @@ class Coments extends Component {
           onChangeText={(text) => this.setState({ comentario: text })}
         />
 
-        <Pressable style={styles.button} onPress={() => this.onSubmit()}>
-          <Text style={styles.buttonText}>Publicar comentario</Text>
+        <Pressable onPress={() => this.onSubmit()}>
+          <Text>Publicar comentario</Text>
         </Pressable>
       </View>
     );
