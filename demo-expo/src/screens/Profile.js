@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, FlatList } from "react-native";
 import { auth, db } from "../firebase/config";
+import Posteo from '../components/Posteo';
 
 class Profile extends Component {
   constructor(props) {
@@ -8,6 +9,7 @@ class Profile extends Component {
     this.state = {
       username: '',
       postCount: 0,
+      posteos: [],
     };
   }
 
@@ -33,7 +35,7 @@ class Profile extends Component {
             id: doc.id, 
             data: doc.data() });
         });
-        this.setState({ postCount: posts.length });
+        this.setState({ postCount: posts.length, posteos: posts });
       });
   }
 
@@ -49,7 +51,7 @@ class Profile extends Component {
   }
 
   render() {
-    const { username, postCount } = this.state;
+    const { username, postCount, posteos } = this.state;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Mi Perfil</Text>
@@ -64,6 +66,17 @@ class Profile extends Component {
           <Text style={styles.label}>Cantidad de posteos</Text>
           <Text style={styles.info}>{postCount}</Text>
         </View>
+
+        <Text style={styles.misPost}>Mis posteos:</Text>
+
+
+          <FlatList
+            data={posteos}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <Posteo info={item} navigation={this.props.navigation} />
+            )}
+          />
 
         <Pressable style={styles.button} onPress={() => this.signOut()}>
           <Text style={styles.buttonText}>Log Out</Text>
@@ -119,6 +132,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center"
    },
+   misPost: {
+    alignSelf: 'flex-start',
+    marginTop: 10, 
+    marginBottom: 6, 
+    fontWeight: '600' }
 });
 
 export default Profile;

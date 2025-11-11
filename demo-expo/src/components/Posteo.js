@@ -29,6 +29,8 @@ class Posteo extends Component {
         console.log(this.props.info)
         const userEmail = auth.currentUser ? auth.currentUser.email : null;
         const likeado = userEmail && this.props.info.data.likes.includes(userEmail);
+        const createdAt = this.props.info.data.createdAt;
+        const fecha = new Date(createdAt).toLocaleString();
         return (
             <View style={styles.container}>
                 <View style={styles.card}>
@@ -36,6 +38,7 @@ class Posteo extends Component {
                         <Text style={styles.owner}>{this.props.info.data.owner}</Text>
                     </View>
 
+                    {fecha && <Text style={styles.fechaCrea}>Creado: {fecha}</Text>}
                     <Text style={styles.description}>{this.props.info.data.description}</Text>
 
                     <View style={styles.metaRow}>
@@ -131,6 +134,12 @@ const styles = StyleSheet.create({
     commentsLink: {
         color: '#2a9df4',
         fontWeight: '500'
+    },
+    fechaCrea: {
+        color: '#3a7bb8',
+        fontSize: 12,
+        marginBottom: 8,
+        textAlign: 'left'
     },
 });
 
