@@ -5,7 +5,14 @@ import { auth, db } from "../firebase/config";
 class Profile extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      usuario: "",
+      posteos: [],
+    };
   }
+
+
+
 
   signOut() {
     auth
@@ -25,13 +32,13 @@ class Profile extends Component {
 
         <View style={styles.card}>
           <Text style={styles.label}>Nombre de usuario:</Text>
-          <Text style={styles.info}>{auth.currentUser.username || "—"}</Text>
+          <Text style={styles.info}>{this.state.username}</Text>
 
-          <Text style={styles.label}>Correo electrónico</Text>
+          <Text style={styles.label}>Correo electrónico:</Text>
           <Text style={styles.info}>{auth.currentUser.email}</Text>
 
-          <Text style={styles.label}>Cantidad de posteos</Text>
-          <Text style={styles.info}>{auth.currentUser.posts || 0}</Text>
+          <Text style={styles.label}>Posteos:</Text>
+          <Text style={styles.info}>{this.state.posts}</Text>
         </View>
 
         <Pressable style={styles.button} onPress={() => this.signOut()}>
@@ -62,7 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 25,
     marginBottom: 30,
-    elevation: 5, 
+    elevation: 5,
   },
   label: {
     fontSize: 14,
@@ -81,13 +88,13 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     alignItems: "center",
     width: "60%",
-    marginVertical: 6
+    marginVertical: 6,
   },
   buttonText: {
     color: "black",
     fontSize: 16,
-    textAlign: "center"
-   },
+    textAlign: "center",
+  },
 });
 
 export default Profile;
