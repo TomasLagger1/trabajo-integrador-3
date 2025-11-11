@@ -66,7 +66,7 @@ class Profile extends Component {
         </View>
 
         <Pressable style={styles.button} onPress={() => this.signOut()}>
-          <Text style={styles.buttonText}>Salir de la app</Text>
+          <Text style={styles.buttonText}>Log Out</Text>
         </Pressable>
       </View>
     );
