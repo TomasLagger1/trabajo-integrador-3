@@ -32,7 +32,7 @@ class Profile extends Component {
         let posts = [];
         docs.forEach(doc => {
           posts.push({ 
-            id: doc.id, 
+            id: doc.id,
             data: doc.data() });
         });
         this.setState({ postCount: posts.length, posteos: posts });
