@@ -5,6 +5,36 @@ import { auth, db } from "../firebase/config";
 class Profile extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      username: '',
+      postCount: 0,
+    };
+  }
+
+  componentDidMount() {
+    const userEmail = auth.currentUser.email;
+    db.collection('users')
+      .where('email', '==', userEmail)
+      .onSnapshot(docs => {
+        let username = '';
+        docs.forEach(doc => {
+          const data = doc.data();
+          username = data.username || '';
+        });
+        this.setState({ username });
+      });
+
+    db.collection('posts')
+      .where('owner', '==', userEmail)
+      .onSnapshot(docs => {
+        let posts = [];
+        docs.forEach(doc => {
+          posts.push({ 
+            id: doc.id, 
+            data: doc.data() });
+        });
+        this.setState({ postCount: posts.length });
+      });
   }
 
   signOut() {
@@ -19,19 +49,20 @@ class Profile extends Component {
   }
 
   render() {
+    const { username, postCount } = this.state;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Mi Perfil</Text>
 
         <View style={styles.card}>
           <Text style={styles.label}>Nombre de usuario:</Text>
-          <Text style={styles.info}>{auth.currentUser.username || "—"}</Text>
+          <Text style={styles.info}>{username || '—'}</Text>
 
           <Text style={styles.label}>Correo electrónico</Text>
           <Text style={styles.info}>{auth.currentUser.email}</Text>
 
           <Text style={styles.label}>Cantidad de posteos</Text>
-          <Text style={styles.info}>{auth.currentUser.posts || 0}</Text>
+          <Text style={styles.info}>{postCount}</Text>
         </View>
 
         <Pressable style={styles.button} onPress={() => this.signOut()}>

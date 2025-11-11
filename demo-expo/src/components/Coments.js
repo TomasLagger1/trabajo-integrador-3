@@ -16,9 +16,7 @@ class Coments extends Component {
         const { comentario, post } = this.state;
 
         if (comentario !== "") {
-            db.collection("posts")
-                .doc(post.id)
-                .update({
+            db.collection("posts").doc(post.id).update({
                     comentarios: firebase.firestore.FieldValue.arrayUnion({
                         owner: auth.currentUser.email,
                         texto: comentario,
@@ -30,7 +28,7 @@ class Coments extends Component {
                         comentario: "",
                     });
                 })
-                .catch((e) => console.log(e));
+                .catch((error) => console.log(error));
         }
     }
 
