@@ -31,7 +31,7 @@ class Profile extends Component {
       .onSnapshot(docs => {
         let posts = [];
         docs.forEach(doc => {
-          posts.push({ 
+          posts.push({
             id: doc.id,
             data: doc.data() });
         });
