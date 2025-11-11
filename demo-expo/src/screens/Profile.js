@@ -6,13 +6,36 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      usuario: "",
-      posteos: [],
+      username: "",
+      posteos: 0,
     };
   }
 
+  componentDidMount() {
+    const userEmail = auth.currentUser.email;
+    db.collection('users')
+      .where('email', '==', userEmail)
+      .onSnapshot(docs => {
+        let username = '';
+        docs.forEach(doc => {
+          const data = doc.data();
+          username = data.username;
+        });
+        this.setState({ username });
+      });
 
-
+    db.collection('posts')
+      .where('owner', '==', userEmail)
+      .onSnapshot(docs => {
+        let posts = [];
+        docs.forEach(doc => {
+          posts.push({ 
+            id: doc.id, 
+            data: doc.data() });
+        });
+        this.setState({ posts: posts.length });
+      });
+  }
 
   signOut() {
     auth
@@ -37,12 +60,12 @@ class Profile extends Component {
           <Text style={styles.label}>Correo electrónico:</Text>
           <Text style={styles.info}>{auth.currentUser.email}</Text>
 
-          <Text style={styles.label}>Posteos:</Text>
+          <Text style={styles.label}>Mis posteos:</Text>
           <Text style={styles.info}>{this.state.posts}</Text>
         </View>
 
         <Pressable style={styles.button} onPress={() => this.signOut()}>
-          <Text style={styles.buttonText}>Salir de la app</Text>
+          <Text style={styles.buttonText}>Log Out</Text>
         </Pressable>
       </View>
     );

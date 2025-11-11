@@ -31,7 +31,7 @@ class Register extends Component {
         this.props.navigation.navigate('Login');
       })
       .catch(error => {
-        this.setState({ error: 'Fallo en el registro' });
+        this.setState({ error: 'Fallo en el registro, revisa que tu mail este bien escrito y la contraseña tenga al menos 6 caracteres' });
         console.log(error);
       });
   }
