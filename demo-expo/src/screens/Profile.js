@@ -21,7 +21,7 @@ class Profile extends Component {
         let username = '';
         docs.forEach(doc => {
           const data = doc.data();
-          username = data.username;
+          username = data.username || '';
         });
         this.setState({ username });
       });
@@ -58,13 +58,13 @@ class Profile extends Component {
 
         <View style={styles.card}>
           <Text style={styles.label}>Nombre de usuario:</Text>
-          <Text style={styles.info}>{this.state.username}</Text>
+          <Text style={styles.info}>{username || 'cargando...'}</Text>
 
-          <Text style={styles.label}>Correo electrónico:</Text>
+          <Text style={styles.label}>Correo electrónico</Text>
           <Text style={styles.info}>{auth.currentUser.email}</Text>
 
-          <Text style={styles.label}>Mis posteos:</Text>
-          <Text style={styles.info}>{this.state.posts}</Text>
+          <Text style={styles.label}>Cantidad de posteos</Text>
+          <Text style={styles.info}>{postCount}</Text>
         </View>
 
         <Text style={styles.misPost}>Mis posteos:</Text>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 25,
     marginBottom: 30,
-    elevation: 5,
+    elevation: 5, 
   },
   label: {
     fontSize: 14,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     alignItems: "center",
     width: "60%",
-    marginVertical: 6,
+    marginVertical: 6
   },
   buttonText: {
     color: "black",
